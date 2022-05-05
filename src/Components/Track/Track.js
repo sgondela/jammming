@@ -1,8 +1,11 @@
 import React from 'react';
 
-export class Track extends React.Component {
+import './Track.css';
+
+class Track extends React.Component {
+
   renderAction() {
-    if (isRemoval) {
+    if (this.props.isRemoval) { // must define in constructor at some point
       return <button className='Track-action'>-</button>;
     } else {
       return <button className='Track-action'>+</button>;
@@ -13,11 +16,13 @@ export class Track extends React.Component {
     return (
       <div className="Track">
         <div className="Track-information">
-          {/* <h3>{Track.name}</h3> */}
-          {/* <p>{Track.artist} | {Track.album}</p> */}
+          <h3>{this.props.track.name}</h3>
+          <p>{this.props.track.artist} | {this.props.track.album}</p>
         </div>
-        {this.renderAction}
+        {this.renderAction()}
       </div>
     );
   }
 };
+
+export default Track;
