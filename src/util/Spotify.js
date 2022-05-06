@@ -1,7 +1,7 @@
 import spotifyClientId from "../config/config";
 
 const clientId = spotifyClientId;
-const redirectUri = 'http://localhost:3000/';
+const redirectUri = 'http://sgondelajammming.surge.sh';
 let accessToken;
 
 const Spotify = {
