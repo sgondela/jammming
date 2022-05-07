@@ -24,15 +24,7 @@ const Spotify = {
       return accessToken;
     } else {
       const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
-      window.location = accessUrl; /* This is as the project required, however, this causes
-                                   // the window to reload on the first seach and after
-                                   // the expiresIn period of time elapses. Not the best
-                                   // implementation for a SPA, but for this project, will
-                                   // leave the code as called out by the instructions. In
-                                   // future implementations, consider requesting a token
-                                   // and parsing the returned URL to get the access_token,
-                                   // and returning that so you don't have to repeat search
-                                   // after access_token has been regranted. */
+      window.location = accessUrl;
     }
   },
 
@@ -44,7 +36,6 @@ const Spotify = {
           Authorization: `Bearer ${accessToken}`
         }
       })
-      console.log(term)
       if (response.ok) {
         const jsonResponse = await response.json();
         if (!jsonResponse.tracks.items) {

@@ -14,7 +14,9 @@ class App extends React.Component {
     this.state = {
       searchResults: [],
       playlistName: 'New Playlist',
-      playlistTracks: []
+      playlistTracks: [],
+      sessionStorageTerm: '',
+      loggedIn: false
     };
 
     this.addTrack = this.addTrack.bind(this);
@@ -61,11 +63,32 @@ class App extends React.Component {
   }
 
   search(term) {
+    window.sessionStorage.setItem('term', term);
     Spotify.search(term).then(searchResults => {
       this.setState({
         searchResults: searchResults
       })
     });
+  }
+
+  componentDidMount() {
+    if (window.location.href.match(/access_token=/)) {
+      Spotify.getAccessToken();
+      this.setState({
+        sessionStorageTerm: window.sessionStorage.getItem('term'),
+        loggedIn: true
+      }, () => {
+        if (this.state.sessionStorageTerm) {
+          Spotify.search(this.state.sessionStorageTerm).then(searchResults => {
+            this.setState({
+              searchResults: searchResults,
+              sessionStorageTerm: ''
+            });
+            window.sessionStorage.removeItem('term');
+          });
+        }
+      })
+    }
   }
 
   render() {
